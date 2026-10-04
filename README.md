@@ -1,0 +1,90 @@
+# MiniCluster
+
+MiniCluster is a small C++17 program that groups customers using **K-Means clustering**. Each customer is a point with two numbers: annual income and spending score. You type the points in, choose how many groups (K) you want, and the program reports the groups it found and how good they are.
+
+It uses only the standard C++ library.
+
+## Build and run
+
+```bash
+g++ -std=c++17 -Iinclude src/*.cpp -o minicluster
+./minicluster
+```
+
+## Example run
+
+Text after each prompt is what the user typed.
+
+```text
+MiniCluster - 2D K-Means clustering
+===================================
+How many points? (1-1000): 9
+Point 1 (income score): 15 80
+Point 2 (income score): 18 75
+Point 3 (income score): 20 85
+Point 4 (income score): 50 50
+Point 5 (income score): 55 45
+Point 6 (income score): 52 55
+Point 7 (income score): 85 15
+Point 8 (income score): 80 20
+Point 9 (income score): 90 10
+Number of clusters K (1-9): 3
+Initializer (random / kmeans++): kmeans++
+Random seed (0-1000000): 42
+
+MiniCluster report
+==================
+Points: 9 | K: 3 | initializer: kmeans++ | seed: 42
+Iterations: 2 | converged: yes | inertia: 225.333 | silhouette: 0.818
+
+Cluster 1: centroid (52.333, 50.000), members: 3
+Cluster 2: centroid (85.000, 15.000), members: 3
+Cluster 3: centroid (17.667, 80.000), members: 3
+
+Compactness diagnostics
+  C1: avg radius 4.337, max radius 5.667
+  C2: avg radius 4.714, max radius 7.071
+  C3: avg radius 4.398, max radius 5.518
+Outlier candidates (z >= 2.5): none
+```
+
+Points can be typed as `45 60` or `45,60`. Invalid input (letters, a missing number, K larger than the number of points, and so on) is rejected and the question is asked again.
+
+## How K-Means works
+
+1. **Pick starting centroids.** Choose K points to be the first cluster centers.
+2. **Assign.** Give every point to its nearest centroid (by Euclidean distance).
+3. **Update.** Move each centroid to the average position of the points assigned to it.
+4. **Repeat** steps 2 and 3 until the centroids barely move (or the iteration limit is reached).
+5. **Report** the final clusters.
+
+If a cluster ends up with no points, its centroid is moved to the point that is farthest from every centroid, so the algorithm can continue.
+
+### Starting strategies
+
+- **random:** picks K different data points at random.
+- **kmeans++:** picks the first centroid at random, then picks each next one with probability proportional to its squared distance from the nearest centroid already chosen. This spreads the starting centroids out and usually gives better results.
+
+The same seed always gives the same result, so runs can be repeated and compared.
+
+## What the report numbers mean
+
+- **Inertia:** total squared distance from each point to its centroid. Smaller means tighter clusters. It almost always drops as K grows, so it cannot choose K by itself.
+- **Silhouette:** from -1 to 1. Near 1 means well-separated clusters, near 0 means overlapping clusters, below 0 means a point may belong in another cluster.
+- **Average / max radius:** how far, on average and at most, a cluster's points are from its centroid.
+- **Outlier candidates:** points whose distance from their centroid is at least 2.5 standard deviations above their cluster's average. This is a hint to look closer, not proof that the data is wrong.
+
+## Project structure
+
+```text
+include/data_point.h    Point type and distance functions
+include/initializers.h  Centroid initializer interface, random and K-Means++
+include/kmeans.h        Cluster type and the KMeans class
+include/analytics.h     Silhouette, cluster radius, outlier detection
+include/input.h         Reading points and settings from the keyboard
+src/                    Implementation of each header, plus main.cpp
+```
+
+## Limitations
+
+K-Means works best on roughly round, similarly sized groups and is sensitive to outliers. You must choose K yourself, so compare inertia and silhouette for several values of K. Silhouette compares every pair of points, so it gets slow for very large datasets (the input is limited to 1000 points).

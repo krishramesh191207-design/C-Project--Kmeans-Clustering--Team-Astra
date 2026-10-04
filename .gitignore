@@ -1,0 +1,9 @@
+# Local build output
+minicluster
+minicluster.exe
+*.o
+*.obj
+
+# IDE and editor files
+.vscode/
+.idea/
