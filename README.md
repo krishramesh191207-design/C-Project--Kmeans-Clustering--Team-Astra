@@ -115,15 +115,41 @@ Compactness diagnostics
 Outlier candidates (z >= 2.5): none
 ```
 
-## Run snapshots
+## All four run modes
 
-K-Means with the included CSV sample:
+The four modes below use the same nine customer points, `K = 3`, `kmeans++` initialization, and seed `42`. This keeps the comparison focused on the input path and clustering algorithm. Each mode includes the terminal report and the exact SVG plot produced by that run.
 
-![K-Means terminal run](docs/images/kmeans-run.svg)
+### 1. K-Means with custom input
 
-K-Medoids with the same CSV sample:
+Choose `kmeans`, then `custom`, and enter the nine points from the example above. The terminal identifies every cluster by its plot colour and reports centroids; the SVG uses matching coloured circles and crosses.
 
-![K-Medoids terminal run](docs/images/kmedoids-run.svg)
+![K-Means custom-input terminal run](docs/images/kmeans-custom-terminal.svg)
+
+![K-Means custom-input plot](docs/images/kmeans-custom/clusters.svg)
+
+### 2. K-Means with CSV input
+
+Choose `kmeans`, then `csv`, and load `examples/customers.csv`. The terminal first shows the CSV checklist. The clustering result and plot match the custom-input run because the point data is the same.
+
+![K-Means CSV terminal run](docs/images/kmeans-csv-terminal.svg)
+
+![K-Means CSV plot](docs/images/kmeans-csv/clusters.svg)
+
+### 3. K-Medoids with custom input
+
+Choose `kmedoids`, then `custom`, and enter the same nine points. The terminal uses the same cluster colour names, while the SVG replaces centroid crosses with matching-colour medoid diamonds.
+
+![K-Medoids custom-input terminal run](docs/images/kmedoids-custom-terminal.svg)
+
+![K-Medoids custom-input plot](docs/images/kmedoids-custom/clusters.svg)
+
+### 4. K-Medoids with CSV input
+
+Choose `kmedoids`, then `csv`, and load `examples/customers.csv`. This combines the CSV validation guidance with medoid-based clustering; its plot uses the same coloured circle-and-diamond mapping as the terminal labels.
+
+![K-Medoids CSV terminal run](docs/images/kmedoids-csv-terminal.svg)
+
+![K-Medoids CSV plot](docs/images/kmedoids-csv/clusters.svg)
 
 ### Large synthetic dataset plot
 

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="600" viewBox="0 0 1120 600" role="img" aria-label="K-Means — custom input terminal run">
+  <rect width="1120" height="600" rx="12" fill="#111827"/>
+  <circle cx="28" cy="27" r="7" fill="#ef4444"/><circle cx="52" cy="27" r="7" fill="#f59e0b"/><circle cx="76" cy="27" r="7" fill="#22c55e"/>
+  <text x="104" y="33" font-family="monospace" font-size="16" fill="#d1d5db">K-Means — custom input</text>
+  <g font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">
+    <text x="28" y="74">MiniCluster - 2D clustering</text>
+    <text x="28" y="96">===================================</text>
+    <text x="28" y="118">Clustering method (kmeans / kmedoids): Input method (custom / csv): How many points? (1-1000): Point 1 (income score):</text>
+    <text x="28" y="140">  Point 2 (income score): Point 3 (income score): Point 4 (income score): Point 5 (income score): Point 6 (income</text>
+    <text x="28" y="162">  score): Point 7 (income score): Point 8 (income score): Point 9 (income score): Number of clusters K (1-9):</text>
+    <text x="28" y="184">  Initializer (random / kmeans++): Random seed (0-1000000): </text>
+    <text x="28" y="206">MiniCluster report</text>
+    <text x="28" y="228">==================</text>
+    <text x="28" y="250">Points: 9 | K: 3 | algorithm: kmeans | initializer: kmeans++ | seed: 42</text>
+    <text x="28" y="272">Iterations: 2 | converged: yes | inertia: 225.333 | silhouette: 0.818</text>
+    <text x="28" y="294"> </text>
+    <text x="28" y="316">Cluster 1 [blue]: centroid (85.000, 15.000), members: 3</text>
+    <text x="28" y="338">Cluster 2 [orange]: centroid (52.333, 50.000), members: 3</text>
+    <text x="28" y="360">Cluster 3 [green]: centroid (17.667, 80.000), members: 3</text>
+    <text x="28" y="382">Plot key: each cluster uses its named colour; circles are data points and crosses are centroids.</text>
+    <text x="28" y="404"> </text>
+    <text x="28" y="426">Visualisation written to clusters.svg</text>
+    <text x="28" y="448"> </text>
+    <text x="28" y="470">Compactness diagnostics</text>
+    <text x="28" y="492">  C1: avg radius 4.714, max radius 7.071</text>
+    <text x="28" y="514">  C2: avg radius 4.337, max radius 5.667</text>
+    <text x="28" y="536">  C3: avg radius 4.398, max radius 5.518</text>
+    <text x="28" y="558">Outlier candidates (z &gt;= 2.5): none</text>
+  </g>
+</svg>
+

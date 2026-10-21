@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="732" viewBox="0 0 1120 732" role="img" aria-label="K-Means — CSV input terminal run">
+  <rect width="1120" height="732" rx="12" fill="#111827"/>
+  <circle cx="28" cy="27" r="7" fill="#ef4444"/><circle cx="52" cy="27" r="7" fill="#f59e0b"/><circle cx="76" cy="27" r="7" fill="#22c55e"/>
+  <text x="104" y="33" font-family="monospace" font-size="16" fill="#d1d5db">K-Means — CSV input</text>
+  <g font-family="Menlo, Consolas, monospace" font-size="14" fill="#e5e7eb">
+    <text x="28" y="74">MiniCluster - 2D clustering</text>
+    <text x="28" y="96">===================================</text>
+    <text x="28" y="118">Clustering method (kmeans / kmedoids): Input method (custom / csv): </text>
+    <text x="28" y="140">CSV requirements:</text>
+    <text x="28" y="162">  - First two columns: numeric X,Y values (for example: 42,61)</text>
+    <text x="28" y="184">  - Optional header on the first non-blank row</text>
+    <text x="28" y="206">  - Blank rows and extra columns are allowed</text>
+    <text x="28" y="228">  - Use finite numbers only; maximum 1000 data rows</text>
+    <text x="28" y="250">  Example: annual_income_k,spending_score</text>
+    <text x="28" y="272"> </text>
+    <text x="28" y="294">CSV file path (first two columns are x,y): Number of clusters K (1-9): Initializer (random / kmeans++): Random seed</text>
+    <text x="28" y="316">  (0-1000000): </text>
+    <text x="28" y="338">MiniCluster report</text>
+    <text x="28" y="360">==================</text>
+    <text x="28" y="382">Points: 9 | K: 3 | algorithm: kmeans | initializer: kmeans++ | seed: 42</text>
+    <text x="28" y="404">Iterations: 2 | converged: yes | inertia: 225.333 | silhouette: 0.818</text>
+    <text x="28" y="426"> </text>
+    <text x="28" y="448">Cluster 1 [blue]: centroid (85.000, 15.000), members: 3</text>
+    <text x="28" y="470">Cluster 2 [orange]: centroid (52.333, 50.000), members: 3</text>
+    <text x="28" y="492">Cluster 3 [green]: centroid (17.667, 80.000), members: 3</text>
+    <text x="28" y="514">Plot key: each cluster uses its named colour; circles are data points and crosses are centroids.</text>
+    <text x="28" y="536"> </text>
+    <text x="28" y="558">Visualisation written to clusters.svg</text>
+    <text x="28" y="580"> </text>
+    <text x="28" y="602">Compactness diagnostics</text>
+    <text x="28" y="624">  C1: avg radius 4.714, max radius 7.071</text>
+    <text x="28" y="646">  C2: avg radius 4.337, max radius 5.667</text>
+    <text x="28" y="668">  C3: avg radius 4.398, max radius 5.518</text>
+    <text x="28" y="690">Outlier candidates (z &gt;= 2.5): none</text>
+  </g>
+</svg>
+
