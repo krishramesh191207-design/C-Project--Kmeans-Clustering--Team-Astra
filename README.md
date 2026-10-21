@@ -22,7 +22,16 @@ Input method (custom / csv):
 
 At startup choose `custom` to enter points one at a time, or `csv` to load a file. CSV files must have numeric `x,y` values in their first two columns. One optional header row is supported, blank rows are ignored, and up to 1,000 points can be loaded.
 
-When `csv` is selected, the CLI shows a short version of these requirements before prompting for the file path.
+When `csv` is selected, the CLI shows this checklist before prompting for the file path:
+
+```text
+CSV requirements:
+  - First two columns: numeric X,Y values (for example: 42,61)
+  - Optional header on the first non-blank row
+  - Blank rows and extra columns are allowed
+  - Use finite numbers only; maximum 1000 data rows
+  Example: annual_income_k,spending_score
+```
 
 ### CSV format requirements
 
