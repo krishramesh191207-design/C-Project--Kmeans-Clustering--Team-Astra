@@ -1,6 +1,6 @@
 # MiniCluster
 
-MiniCluster is a small C++17 program that groups customers using **K-Means** or **K-Medoids** clustering. Each customer is a 2D point, such as annual income and spending score. Enter points manually or load them from a CSV file, choose how many groups (K) you want, and the program reports the resulting clusters and diagnostics.
+MiniCluster is a small C++17 program that groups customers using **K-Means** or **K-Medoids** clustering. Each customer is a 2D point, such as annual income and spending score. At startup, choose both the clustering method and input method: enter custom points or load a CSV file. The program then reports the resulting clusters, diagnostics, and an SVG plot.
 
 It uses only the standard C++ library.
 
@@ -11,14 +11,22 @@ g++ -std=c++17 -Iinclude src/*.cpp -o minicluster
 ./minicluster
 ```
 
+The first two prompts make the available modes explicit:
+
+```text
+Clustering method (kmeans / kmedoids):
+Input method (custom / csv):
+```
+
 ## Data input
 
-At startup choose `manual` to enter points one at a time, or `csv` to load a file. CSV files must have numeric `x,y` values in their first two columns. One optional header row is supported, blank rows are ignored, and up to 1,000 points can be loaded.
+At startup choose `custom` to enter points one at a time, or `csv` to load a file. CSV files must have numeric `x,y` values in their first two columns. One optional header row is supported, blank rows are ignored, and up to 1,000 points can be loaded.
 
 For example, the included sample can be selected with:
 
 ```text
-Data source (manual / csv): csv
+Clustering method (kmeans / kmedoids): kmedoids
+Input method (custom / csv): csv
 CSV file path (first two columns are x,y): examples/customers.csv
 ```
 
@@ -33,7 +41,8 @@ Text after each prompt is what the user typed.
 ```text
 MiniCluster - 2D clustering
 ============================
-Data source (manual / csv): manual
+Clustering method (kmeans / kmedoids): kmeans
+Input method (custom / csv): custom
 How many points? (1-1000): 9
 Point 1 (income score): 15 80
 Point 2 (income score): 18 75
@@ -46,7 +55,6 @@ Point 8 (income score): 80 20
 Point 9 (income score): 90 10
 Number of clusters K (1-9): 3
 Initializer (random / kmeans++): kmeans++
-Algorithm (kmeans / kmedoids): kmeans
 Random seed (0-1000000): 42
 
 MiniCluster report
@@ -64,6 +72,16 @@ Compactness diagnostics
   C3: avg radius 4.398, max radius 5.518
 Outlier candidates (z >= 2.5): none
 ```
+
+## Run snapshots
+
+K-Means with the included CSV sample:
+
+![K-Means terminal run](docs/images/kmeans-run.svg)
+
+K-Medoids with the same CSV sample:
+
+![K-Medoids terminal run](docs/images/kmedoids-run.svg)
 
 Points can be typed as `45 60` or `45,60`. Invalid input (letters, a missing number, K larger than the number of points, and so on) is rejected and the question is asked again.
 

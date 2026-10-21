@@ -16,15 +16,15 @@ int main() {
         cout << "MiniCluster - 2D clustering\n";
         cout << "===================================\n";
 
-        // 1. Get the data and the settings from the user.
+        // 1. Choose the algorithm and source, then get the data and settings.
+        const string algorithm = readChoice("Clustering method (kmeans / kmedoids): ",
+                                            {"kmeans", "kmedoids"});
         const vector<DataPoint> data = readPoints();
         const size_t clusterCount = static_cast<size_t>(
             readInteger("Number of clusters K (1-" + to_string(data.size()) + "): ",
                         1, static_cast<long long>(data.size())));
         const string initializerName = readChoice("Initializer (random / kmeans++): ",
                                                   {"random", "kmeans++"});
-        const string algorithm = readChoice("Algorithm (kmeans / kmedoids): ",
-                                            {"kmeans", "kmedoids"});
         const unsigned int seed = static_cast<unsigned int>(
             readInteger("Random seed (0-1000000): ", 0, 1000000));
 

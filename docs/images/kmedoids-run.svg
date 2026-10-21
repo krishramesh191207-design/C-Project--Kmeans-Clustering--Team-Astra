@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700" role="img" aria-label="K-Medoids CSV run in the MiniCluster terminal">
+  <rect width="1120" height="700" rx="12" fill="#111827"/>
+  <circle cx="28" cy="27" r="7" fill="#ef4444"/><circle cx="52" cy="27" r="7" fill="#f59e0b"/><circle cx="76" cy="27" r="7" fill="#22c55e"/>
+  <text x="104" y="33" font-family="monospace" font-size="16" fill="#d1d5db">minicluster — K-Medoids with CSV input</text>
+  <g font-family="Menlo, Consolas, monospace" font-size="17" fill="#e5e7eb">
+    <text x="30" y="76">MiniCluster - 2D clustering</text>
+    <text x="30" y="102">===================================</text>
+    <text x="30" y="136" fill="#93c5fd">Clustering method (kmeans / kmedoids): kmedoids</text>
+    <text x="30" y="162" fill="#93c5fd">Input method (custom / csv): csv</text>
+    <text x="30" y="188" fill="#93c5fd">CSV file path (first two columns are x,y): examples/customers.csv</text>
+    <text x="30" y="214" fill="#93c5fd">Number of clusters K (1-9): 3</text>
+    <text x="30" y="240" fill="#93c5fd">Initializer (random / kmeans++): kmeans++</text>
+    <text x="30" y="266" fill="#93c5fd">Random seed (0-1000000): 42</text>
+    <text x="30" y="310">MiniCluster report</text>
+    <text x="30" y="336">==================</text>
+    <text x="30" y="370">Points: 9 | K: 3 | algorithm: kmedoids | initializer: kmeans++ | seed: 42</text>
+    <text x="30" y="396" fill="#86efac">Iterations: 2 | converged: yes | medoid cost: 39.500 | silhouette: 0.818</text>
+    <text x="30" y="438">Cluster 1: medoid (85.000, 15.000), members: 3</text>
+    <text x="30" y="464">Cluster 2: medoid (50.000, 50.000), members: 3</text>
+    <text x="30" y="490">Cluster 3: medoid (15.000, 80.000), members: 3</text>
+    <text x="30" y="532" fill="#fcd34d">Visualisation written to clusters.svg</text>
+    <text x="30" y="574">Compactness diagnostics</text>
+    <text x="30" y="600">  C1: avg radius 4.714, max radius 7.071</text>
+    <text x="30" y="626">  C2: avg radius 4.152, max radius 7.071</text>
+    <text x="30" y="652">  C3: avg radius 4.301, max radius 7.071</text>
+    <text x="30" y="678">Outlier candidates (z &gt;= 2.5): none</text>
+  </g>
+</svg>

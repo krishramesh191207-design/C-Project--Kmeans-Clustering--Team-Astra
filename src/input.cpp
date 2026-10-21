@@ -150,7 +150,7 @@ vector<DataPoint> readPointsFromCsv(const string& filename) {
 }
 
 vector<DataPoint> readPoints() {
-    const string source = readChoice("Data source (manual / csv): ", {"manual", "csv"});
-    if (source == "manual") return readPointsFromUser();
+    const string source = readChoice("Input method (custom / csv): ", {"custom", "csv"});
+    if (source == "custom") return readPointsFromUser();
     return readPointsFromCsv(readLine("CSV file path (first two columns are x,y): "));
 }
