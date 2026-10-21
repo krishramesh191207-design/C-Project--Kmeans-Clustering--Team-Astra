@@ -1,4 +1,5 @@
 #include "kmeans.h"
+#include "cluster_style.h"
 
 #include <algorithm>
 #include <iomanip>
@@ -108,7 +109,7 @@ void KMeans::printResults() const {
     cout << fixed << setprecision(3);
     for (size_t index = 0; index < clusters_.size(); ++index) {
         const Cluster& cluster = clusters_[index];
-        cout << "Cluster " << index + 1 << ": centroid (" << cluster.centroid.x << ", "
+        cout << "Cluster " << index + 1 << " [" << clusterColorName(index) << "]: centroid (" << cluster.centroid.x << ", "
              << cluster.centroid.y << "), members: " << cluster.memberIndices.size() << '\n';
     }
 }

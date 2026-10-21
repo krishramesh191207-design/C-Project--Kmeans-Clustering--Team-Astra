@@ -1,4 +1,5 @@
 #include "visualization.h"
+#include "cluster_style.h"
 
 #include <algorithm>
 #include <fstream>
@@ -17,6 +18,7 @@ constexpr double kTop = 60.0;
 constexpr double kBottom = 85.0;
 constexpr double kPlotWidth = kWidth - kLeft - kRight;
 constexpr double kPlotHeight = kHeight - kTop - kBottom;
+constexpr double kLegendX = kWidth - kRight - 150.0;
 const char* kColors[] = {"#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c", "#0891b2",
                          "#db2777", "#4f46e5", "#65a30d", "#a16207"};
 constexpr size_t kColorCount = sizeof(kColors) / sizeof(kColors[0]);
@@ -101,6 +103,19 @@ void writeRepresentative(ostream& output, const DataPoint& point, const Bounds& 
            << "\" stroke=\"" << color << "\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n";
 }
 
+void writeLegendMarker(ostream& output, double x, double y, const char* color, bool usesMedoids) {
+    output << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"4\" fill=\"" << color << "\"/>\n";
+    if (usesMedoids) {
+        output << "<polygon points=\"" << x + 15 << ',' << y - 6 << ' ' << x + 21 << ',' << y << ' '
+               << x + 15 << ',' << y + 6 << ' ' << x + 9 << ',' << y
+               << "\" fill=\"white\" stroke=\"" << color << "\" stroke-width=\"2\"/>\n";
+        return;
+    }
+    output << "<path d=\"M " << x + 10 << ' ' << y - 5 << " L " << x + 20 << ' ' << y + 5
+           << " M " << x + 20 << ' ' << y - 5 << " L " << x + 10 << ' ' << y + 5
+           << "\" stroke=\"" << color << "\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n";
+}
+
 void writeCluster(ostream& output, const vector<DataPoint>& data, const Cluster& cluster,
                   size_t clusterIndex, const Bounds& bounds, bool usesMedoids) {
     const char* color = kColors[clusterIndex % kColorCount];
@@ -112,9 +127,11 @@ void writeCluster(ostream& output, const vector<DataPoint>& data, const Cluster&
                << ", " << point.y << ")</title></circle>\n";
     }
     writeRepresentative(output, cluster.centroid, bounds, color, usesMedoids);
-    output << "<text x=\"" << kWidth - kRight - 130 << "\" y=\"" << kTop + 20 + clusterIndex * 22
-           << "\" font-size=\"13\" fill=\"" << color << "\">● Cluster " << clusterIndex + 1
-           << "</text>\n";
+    const double legendY = kTop + 47 + clusterIndex * 22;
+    writeLegendMarker(output, kLegendX, legendY - 4, color, usesMedoids);
+    output << "<text x=\"" << kLegendX + 27 << "\" y=\"" << legendY
+           << "\" font-size=\"12\">C" << clusterIndex + 1 << " · " << clusterColorName(clusterIndex)
+           << " · " << cluster.memberIndices.size() << " points</text>\n";
 }
 }  // namespace
 
@@ -135,6 +152,11 @@ void writeClusterSvg(const string& filename,
            << (usesMedoids ? "K-Medoids" : "K-Means") << " clustering</text>\n";
 
     writeGrid(output, bounds);
+    output << "<text x=\"" << kLegendX << "\" y=\"" << kTop + 18
+           << "\" font-size=\"13\" font-weight=\"bold\">Legend</text>\n"
+           << "<text x=\"" << kLegendX << "\" y=\"" << kTop + 34
+           << "\" font-size=\"11\">circle = point; "
+           << (usesMedoids ? "diamond = medoid" : "cross = centroid") << "</text>\n";
     for (size_t index = 0; index < clusters.size(); ++index) {
         writeCluster(output, data, clusters[index], index, bounds, usesMedoids);
     }

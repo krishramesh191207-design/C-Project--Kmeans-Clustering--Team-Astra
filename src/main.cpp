@@ -77,6 +77,9 @@ int main() {
         if (algorithm == "kmeans") kmeans.printResults();
         else kmedoids.printResults();
 
+        cout << "Plot key: each cluster uses its named colour; circles are data points and "
+             << (algorithm == "kmeans" ? "crosses are centroids.\n" : "diamonds are medoids.\n");
+
         const string plotFilename = "clusters.svg";
         writeClusterSvg(plotFilename, data, *result.clusters, algorithm == "kmedoids");
         cout << "\nVisualisation written to " << plotFilename << '\n';

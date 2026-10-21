@@ -74,7 +74,7 @@ For a larger, more realistic test, use `examples/large_customers.csv`. It contai
 
 ## Visualisation
 
-Every completed run writes `clusters.svg` in the directory where `minicluster` is run. Open that file in a browser to see a scatter plot of the points, coloured by cluster. K-Means centroids appear as crosses; K-Medoids medoids appear as diamonds. The chart includes axes, scale labels, a cluster legend, and point-coordinate tooltips.
+Every completed run writes `clusters.svg` in the directory where `minicluster` is run. Open that file in a browser to see a scatter plot of the points, coloured by cluster. K-Means centroids appear as crosses; K-Medoids medoids appear as diamonds. The legend uses the same colour and representative shape as the plotted cluster, and labels every entry with its cluster ID, colour name, and point count. The CLI prints the matching colour name beside each cluster summary. The chart also includes axes, scale labels, and point-coordinate tooltips.
 
 ## Example run
 
