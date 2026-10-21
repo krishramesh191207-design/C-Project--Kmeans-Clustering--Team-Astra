@@ -22,6 +22,8 @@ Input method (custom / csv):
 
 At startup choose `custom` to enter points one at a time, or `csv` to load a file. CSV files must have numeric `x,y` values in their first two columns. One optional header row is supported, blank rows are ignored, and up to 1,000 points can be loaded.
 
+When `csv` is selected, the CLI shows a short version of these requirements before prompting for the file path.
+
 ### CSV format requirements
 
 Use a comma-separated text file with one customer point per row. The loader uses **only the first two columns**:

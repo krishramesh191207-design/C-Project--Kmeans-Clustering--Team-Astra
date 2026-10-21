@@ -13,6 +13,9 @@ vector<DataPoint> readPointsFromUser();
 // single header row is allowed and blank lines are ignored.
 vector<DataPoint> readPointsFromCsv(const string& filename);
 
+// Shows the accepted CSV structure before asking for a CSV file path.
+void printCsvRequirements();
+
 // Lets the user choose either keyboard input or a CSV file.
 vector<DataPoint> readPoints();
 

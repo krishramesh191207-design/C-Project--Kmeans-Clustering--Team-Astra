@@ -149,8 +149,18 @@ vector<DataPoint> readPointsFromCsv(const string& filename) {
     return data;
 }
 
+void printCsvRequirements() {
+    cout << "\nCSV requirements:\n"
+         << "  - First two columns: numeric X,Y values (for example: 42,61)\n"
+         << "  - Optional header on the first non-blank row\n"
+         << "  - Blank rows and extra columns are allowed\n"
+         << "  - Use finite numbers only; maximum 1000 data rows\n"
+         << "  Example: annual_income_k,spending_score\n\n";
+}
+
 vector<DataPoint> readPoints() {
     const string source = readChoice("Input method (custom / csv): ", {"custom", "csv"});
     if (source == "custom") return readPointsFromUser();
+    printCsvRequirements();
     return readPointsFromCsv(readLine("CSV file path (first two columns are x,y): "));
 }
