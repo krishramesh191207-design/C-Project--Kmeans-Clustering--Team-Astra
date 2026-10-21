@@ -22,6 +22,10 @@ Data source (manual / csv): csv
 CSV file path (first two columns are x,y): examples/customers.csv
 ```
 
+## Visualisation
+
+Every completed run writes `clusters.svg` in the directory where `minicluster` is run. Open that file in a browser to see a scatter plot of the points, coloured by cluster. K-Means centroids appear as crosses; K-Medoids medoids appear as diamonds. The chart includes axes, scale labels, a cluster legend, and point-coordinate tooltips.
+
 ## Example run
 
 Text after each prompt is what the user typed.

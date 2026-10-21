@@ -1,9 +1,2 @@
-# Local build output
+clusters.svg
 minicluster
-minicluster.exe
-*.o
-*.obj
-
-# IDE and editor files
-.vscode/
-.idea/

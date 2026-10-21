@@ -3,6 +3,7 @@
 #include "input.h"
 #include "kmeans.h"
 #include "kmedoids.h"
+#include "visualization.h"
 
 #include <cstdlib>
 #include <iomanip>
@@ -62,6 +63,10 @@ int main() {
 
         if (algorithm == "kmeans") kmeans.printResults();
         else kmedoids.printResults();
+
+        const string plotFilename = "clusters.svg";
+        writeClusterSvg(plotFilename, data, clusters, algorithm == "kmedoids");
+        cout << "\nVisualisation written to " << plotFilename << '\n';
 
         cout << "\nCompactness diagnostics\n";
         for (const auto& summary : summaries) {
