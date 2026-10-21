@@ -30,7 +30,7 @@ Input method (custom / csv): csv
 CSV file path (first two columns are x,y): examples/customers.csv
 ```
 
-For a larger test, use `examples/large_customers.csv`. It contains 600 deterministic sample customers across four broadly separated income/spending groups and remains within the program's 1,000-point CSV limit.
+For a larger, more realistic test, use `examples/large_customers.csv`. It contains 600 seeded synthetic customer records with overlapping income/spending patterns, broad variation, and a few unusual cases. The data is random-looking but deterministic, so demos and results remain reproducible; it contains no real customer information and remains within the program's 1,000-point CSV limit.
 
 ## Visualisation
 
@@ -84,6 +84,12 @@ K-Means with the included CSV sample:
 K-Medoids with the same CSV sample:
 
 ![K-Medoids terminal run](docs/images/kmedoids-run.svg)
+
+### Large synthetic dataset plot
+
+The following is a generated K-Medoids plot of `examples/large_customers.csv` using `K = 6` and seed `42`:
+
+![Large synthetic customer clusters](docs/images/clusters.svg)
 
 Points can be typed as `45 60` or `45,60`. Invalid input (letters, a missing number, K larger than the number of points, and so on) is rejected and the question is asked again.
 
