@@ -1,6 +1,6 @@
 # MiniCluster
 
-MiniCluster is a small C++17 program that groups customers using **K-Means clustering**. Each customer is a point with two numbers: annual income and spending score. You type the points in, choose how many groups (K) you want, and the program reports the groups it found and how good they are.
+MiniCluster is a small C++17 program that groups customers using **K-Means** or **K-Medoids** clustering. Each customer is a 2D point, such as annual income and spending score. Enter points manually or load them from a CSV file, choose how many groups (K) you want, and the program reports the resulting clusters and diagnostics.
 
 It uses only the standard C++ library.
 
@@ -11,13 +11,25 @@ g++ -std=c++17 -Iinclude src/*.cpp -o minicluster
 ./minicluster
 ```
 
+## Data input
+
+At startup choose `manual` to enter points one at a time, or `csv` to load a file. CSV files must have numeric `x,y` values in their first two columns. One optional header row is supported, blank rows are ignored, and up to 1,000 points can be loaded.
+
+For example, the included sample can be selected with:
+
+```text
+Data source (manual / csv): csv
+CSV file path (first two columns are x,y): examples/customers.csv
+```
+
 ## Example run
 
 Text after each prompt is what the user typed.
 
 ```text
-MiniCluster - 2D K-Means clustering
-===================================
+MiniCluster - 2D clustering
+============================
+Data source (manual / csv): manual
 How many points? (1-1000): 9
 Point 1 (income score): 15 80
 Point 2 (income score): 18 75
@@ -30,11 +42,12 @@ Point 8 (income score): 80 20
 Point 9 (income score): 90 10
 Number of clusters K (1-9): 3
 Initializer (random / kmeans++): kmeans++
+Algorithm (kmeans / kmedoids): kmeans
 Random seed (0-1000000): 42
 
 MiniCluster report
 ==================
-Points: 9 | K: 3 | initializer: kmeans++ | seed: 42
+Points: 9 | K: 3 | algorithm: kmeans | initializer: kmeans++ | seed: 42
 Iterations: 2 | converged: yes | inertia: 225.333 | silhouette: 0.818
 
 Cluster 1: centroid (52.333, 50.000), members: 3
@@ -67,6 +80,10 @@ If a cluster ends up with no points, its centroid is moved to the point that is 
 
 The same seed always gives the same result, so runs can be repeated and compared.
 
+## How K-Medoids works
+
+K-Medoids uses the same assign-and-update loop, but each cluster centre is always an existing data point (the **medoid**). In the update step, it tries every member of a cluster as the potential medoid and keeps the one with the smallest total Euclidean distance to the other members. This makes it less sensitive to outliers than K-Means, whose centroids are arithmetic averages. Its `medoid cost` is the total distance to medoids, so it is distinct from K-Means inertia and should only be compared between K-Medoids runs on the same data.
+
 ## What the report numbers mean
 
 - **Inertia:** total squared distance from each point to its centroid. Smaller means tighter clusters. It almost always drops as K grows, so it cannot choose K by itself.
@@ -80,11 +97,12 @@ The same seed always gives the same result, so runs can be repeated and compared
 include/data_point.h    Point type and distance functions
 include/initializers.h  Centroid initializer interface, random and K-Means++
 include/kmeans.h        Cluster type and the KMeans class
+include/kmedoids.h      KMedoids class (representatives are input points)
 include/analytics.h     Silhouette, cluster radius, outlier detection
-include/input.h         Reading points and settings from the keyboard
+include/input.h         Reading manual points, CSV files, and settings
 src/                    Implementation of each header, plus main.cpp
 ```
 
 ## Limitations
 
-K-Means works best on roughly round, similarly sized groups and is sensitive to outliers. You must choose K yourself, so compare inertia and silhouette for several values of K. Silhouette compares every pair of points, so it gets slow for very large datasets (the input is limited to 1000 points).
+K-Means works best on roughly round, similarly sized groups and is sensitive to outliers. K-Medoids is more robust to outliers but takes more work per iteration, especially for large clusters. You must choose K yourself, so compare inertia or medoid cost together with silhouette for several values of K. Silhouette compares every pair of points, so it gets slow for very large datasets (the input is limited to 1000 points).

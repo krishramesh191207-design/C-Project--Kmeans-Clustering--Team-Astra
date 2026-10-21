@@ -9,6 +9,13 @@
 // Bad input is rejected and the user is asked again.
 vector<DataPoint> readPointsFromUser();
 
+// Reads a CSV file whose first two columns are numeric x and y values. A
+// single header row is allowed and blank lines are ignored.
+vector<DataPoint> readPointsFromCsv(const string& filename);
+
+// Lets the user choose either keyboard input or a CSV file.
+vector<DataPoint> readPoints();
+
 // Asks for a whole number between minimum and maximum (inclusive).
 // Keeps asking until the user types a valid number.
 long long readInteger(const string& prompt, long long minimum, long long maximum);

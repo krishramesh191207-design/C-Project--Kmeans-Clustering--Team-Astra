@@ -2,6 +2,7 @@
 #include "initializers.h"
 #include "input.h"
 #include "kmeans.h"
+#include "kmedoids.h"
 
 #include <cstdlib>
 #include <iomanip>
@@ -11,16 +12,18 @@
 
 int main() {
     try {
-        cout << "MiniCluster - 2D K-Means clustering\n";
+        cout << "MiniCluster - 2D clustering\n";
         cout << "===================================\n";
 
         // 1. Get the data and the settings from the user.
-        const vector<DataPoint> data = readPointsFromUser();
+        const vector<DataPoint> data = readPoints();
         const size_t clusterCount = static_cast<size_t>(
             readInteger("Number of clusters K (1-" + to_string(data.size()) + "): ",
                         1, static_cast<long long>(data.size())));
         const string initializerName = readChoice("Initializer (random / kmeans++): ",
                                                   {"random", "kmeans++"});
+        const string algorithm = readChoice("Algorithm (kmeans / kmedoids): ",
+                                            {"kmeans", "kmedoids"});
         const unsigned int seed = static_cast<unsigned int>(
             readInteger("Random seed (0-1000000): ", 0, 1000000));
 
@@ -33,26 +36,32 @@ int main() {
             initializer.reset(new KMeansPlusPlusInitializer());
         }
 
-        // 3. Run K-Means.
-        KMeans model(clusterCount, *initializer, 200, 1e-4, seed);
-        model.fit(data);
+        // 3. Run the selected clustering algorithm.
+        KMeans kmeans(clusterCount, *initializer, 200, 1e-4, seed);
+        KMedoids kmedoids(clusterCount, *initializer, 200, seed);
+        if (algorithm == "kmeans") kmeans.fit(data);
+        else kmedoids.fit(data);
+        const vector<Cluster>& clusters = algorithm == "kmeans" ? kmeans.clusters() : kmedoids.clusters();
 
         // 4. Analyse the result.
-        const auto summaries = summarizeClusters(data, model.clusters());
-        const auto outliers = findOutliers(data, model.clusters());
+        const auto summaries = summarizeClusters(data, clusters);
+        const auto outliers = findOutliers(data, clusters);
 
         // 5. Print the report.
         cout << fixed << setprecision(3);
         cout << "\nMiniCluster report\n"
              << "==================\n"
              << "Points: " << data.size() << " | K: " << clusterCount
-             << " | initializer: " << initializerName << " | seed: " << seed << "\n"
-             << "Iterations: " << model.iterations()
-             << " | converged: " << (model.converged() ? "yes" : "no")
-             << " | inertia: " << model.inertia()
-             << " | silhouette: " << silhouetteScore(data, model.clusters()) << "\n\n";
+             << " | algorithm: " << algorithm << " | initializer: " << initializerName
+             << " | seed: " << seed << "\n"
+             << "Iterations: " << (algorithm == "kmeans" ? kmeans.iterations() : kmedoids.iterations())
+             << " | converged: " << ((algorithm == "kmeans" ? kmeans.converged() : kmedoids.converged()) ? "yes" : "no")
+             << " | " << (algorithm == "kmeans" ? "inertia: " : "medoid cost: ")
+             << (algorithm == "kmeans" ? kmeans.inertia() : kmedoids.cost())
+             << " | silhouette: " << silhouetteScore(data, clusters) << "\n\n";
 
-        model.printResults();
+        if (algorithm == "kmeans") kmeans.printResults();
+        else kmedoids.printResults();
 
         cout << "\nCompactness diagnostics\n";
         for (const auto& summary : summaries) {
