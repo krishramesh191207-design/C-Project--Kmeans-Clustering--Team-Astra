@@ -22,6 +22,35 @@ Input method (custom / csv):
 
 At startup choose `custom` to enter points one at a time, or `csv` to load a file. CSV files must have numeric `x,y` values in their first two columns. One optional header row is supported, blank rows are ignored, and up to 1,000 points can be loaded.
 
+### CSV format requirements
+
+Use a comma-separated text file with one customer point per row. The loader uses **only the first two columns**:
+
+1. **Column 1:** X coordinate, for example annual income.
+2. **Column 2:** Y coordinate, for example spending score.
+
+Both values must be finite numbers (`45`, `72.5`, and `1e2` are valid). Extra columns are allowed and ignored. A single header row is optional; if used, it must be the first non-blank row. Blank rows are ignored. Keep the file to 1,000 data rows or fewer.
+
+Valid example:
+
+```csv
+annual_income_k,spending_score,customer_segment
+42,61,regular
+75.5,28,cautious
+105,84,premium
+```
+
+Avoid rows with a missing value, letters in either of the first two columns, `NaN`, or infinity. These cause the program to stop with an error after the optional header row:
+
+```csv
+annual_income_k,spending_score
+42,61
+75,not_available
+,84
+```
+
+The column names themselves are not required or validated; they are included only to make the file understandable. A headerless two-column file is equally valid.
+
 For example, the included sample can be selected with:
 
 ```text
