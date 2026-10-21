@@ -8,6 +8,32 @@
 
 using namespace std;
 
+namespace {
+bool samePoint(const DataPoint& first, const DataPoint& second) {
+    return first.x == second.x && first.y == second.y;
+}
+
+size_t findUnusedMatchingPoint(const vector<DataPoint>& data,
+                               const vector<size_t>& usedIndices,
+                               const DataPoint& target) {
+    for (size_t index = 0; index < data.size(); ++index) {
+        if (samePoint(data[index], target) &&
+            find(usedIndices.begin(), usedIndices.end(), index) == usedIndices.end()) {
+            return index;
+        }
+    }
+    throw logic_error("initializer returned a medoid outside the input data");
+}
+
+double totalDistanceToMembers(size_t candidate,
+                              const vector<size_t>& members,
+                              const vector<DataPoint>& data) {
+    double total = 0.0;
+    for (size_t member : members) total += distance(data[candidate], data[member]);
+    return total;
+}
+}  // namespace
+
 KMedoids::KMedoids(size_t clusterCount,
                    const CentroidInitializer& initializer,
                    size_t maxIterations,
@@ -28,17 +54,7 @@ void KMedoids::fit(const vector<DataPoint>& data) {
     medoidIndices_.clear();
     const vector<DataPoint> startingMedoids = initializer_.initialize(data, clusterCount_, generator_);
     for (const DataPoint& medoid : startingMedoids) {
-        size_t index = data.size();
-        for (size_t candidate = 0; candidate < data.size(); ++candidate) {
-            if (data[candidate].x == medoid.x && data[candidate].y == medoid.y &&
-                find(medoidIndices_.begin(), medoidIndices_.end(), candidate) == medoidIndices_.end()) {
-                index = candidate;
-                break;
-            }
-        }
-        if (index == data.size()) {
-            throw logic_error("initializer returned a medoid outside the input data");
-        }
+        const size_t index = findUnusedMatchingPoint(data, medoidIndices_, medoid);
         medoidIndices_.push_back(index);
         clusters_.push_back({data[index], {}});
     }
@@ -88,8 +104,7 @@ bool KMedoids::updateMedoids(const vector<DataPoint>& data) {
         } else {
             double bestCost = numeric_limits<double>::infinity();
             for (size_t candidate : members) {
-                double candidateCost = 0.0;
-                for (size_t member : members) candidateCost += distance(data[candidate], data[member]);
+                const double candidateCost = totalDistanceToMembers(candidate, members, data);
                 if (candidateCost < bestCost) {
                     bestCost = candidateCost;
                     bestMedoid = candidate;
